@@ -1,0 +1,36 @@
+base_kv: 220
+tap_spacing_km: 10          # virtual theft-candidate buses every 10 km
+
+buses:
+  - {id: SHARAVATHI,   km: 0,   role: slack_gen,  metered: true,  source: assumed}
+  - {id: SHIMOGA,      km: 110, role: junction,   metered: true,  source: assumed}
+  - {id: SIRA_KBCROSS, km: 215, role: junction,   metered: false, source: assumed}
+  - {id: NELAMANGALA,  km: 320, role: junction,   metered: true,  source: assumed}
+  - {id: PEENYA,       km: 361, role: load,       metered: true,  source: assumed}
+
+# Lines — 220 kV double-circuit, twin-bundle ACSR (2 circuits folded as 1 equivalent):
+#   r/x/c are already per-equivalent-circuit (parallel = half R/X, double C)
+lines:
+  r_ohm_per_km: 0.020         # source: assumed (twin-bundle ACSR, 220 kV, 2-ckt parallel)
+  x_ohm_per_km: 0.18          # source: assumed
+  c_nf_per_km:  20.0          # source: assumed (bundling + 2-ckt parallel)
+  max_i_ka:     1.60          # source: assumed (0.80 kA per ckt * 2 ckts)
+  circuits:     1             # already folded — treat as single equivalent
+
+# Accounted (metered/forecast) demands at substation buses, peak load
+loads:
+  - {bus: SHIMOGA,      p_mw: 60,  q_mvar: 20, source: assumed}
+  - {bus: SIRA_KBCROSS, p_mw: 40,  q_mvar: 12, source: assumed}
+  - {bus: NELAMANGALA,  p_mw: 80,  q_mvar: 25, source: assumed}
+  - {bus: PEENYA,       p_mw: 180, q_mvar: 60, source: assumed}
+
+# Shunt reactive compensation (capacitor banks) — reduces reactive burden on corridor
+shunts:
+  - {bus: SHIMOGA,      q_mvar_cap: 20,  source: assumed}
+  - {bus: SIRA_KBCROSS, q_mvar_cap: 15,  source: assumed}
+  - {bus: NELAMANGALA,  q_mvar_cap: 30,  source: assumed}
+  - {bus: PEENYA,       q_mvar_cap: 40,  source: assumed}
+
+gen:
+  bus:   SHARAVATHI
+  vm_pu: 1.05                 # source: assumed (slack bus voltage setpoint)

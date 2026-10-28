@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Design tokens — reference data-viz palette (dataviz skill, references/palette.md).
+   Dark is the default control-room theme; light is selected separately, not auto-flipped. */
+:root,
+:root[data-theme="light"] {
+  color-scheme: light;
+  --surface-0: #f4f4f2;
+  --surface-1: #fcfcfb;
+  --surface-2: #f0efec;
+  --surface-3: #e4e3de;
+  --border: #d6d5cf;
+  --text-primary: #0b0b0b;
+  --text-secondary: #52514e;
+  --text-muted: #63625d;
+  --accent: #2a78d6;
+  --accent-strong: #2468c0; /* button fill: white text ≥ 4.5:1 */
+  --series-1: #2a78d6;
+  --series-2: #eb6834;
+  --series-3: #1baf7a;
+  --neutral-ref: #8a8984;
+  --status-good: #0ca30c;
+  --status-warning: #fab219;
+  --status-serious: #ec835a;
+  --status-critical: #d03b3b;
+  --status-good-text: #006300;
+  --status-critical-text: #b02a2a;
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --surface-0: #121211;
+  --surface-1: #1a1a19;
+  --surface-2: #232321;
+  --surface-3: #2e2e2b;
+  --border: #383835;
+  --text-primary: #f0efec;
+  --text-secondary: #c3c2b7;
+  --text-muted: #9a998f;
+  --accent: #3987e5;
+  --accent-strong: #2468c0;
+  --series-1: #3987e5;
+  --series-2: #d95926;
+  --series-3: #199e70;
+  --neutral-ref: #8f8e86;
+  --status-good-text: #4cc94c;
+  --status-critical-text: #f07b7b;
+}
+
+html, body, #root { height: 100%; }
+body {
+  @apply bg-surface-0 text-ink-1 font-sans antialiased;
+  font-feature-settings: "tnum" 1;
+}
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+.card { @apply bg-surface-1 border border-line rounded-lg; }
+.card-title { @apply text-[11px] font-semibold uppercase tracking-[0.08em] text-ink-2; }
+.btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-md px-3 py-1.5 text-sm font-medium
+         border border-line bg-surface-2 text-ink-1 hover:bg-surface-3 disabled:opacity-50
+         disabled:cursor-not-allowed transition-colors;
+}
+.btn-primary { @apply bg-[var(--accent-strong)] border-transparent text-white hover:brightness-110 hover:bg-[var(--accent-strong)]; }
+.field-label { @apply text-xs font-medium text-ink-2; }
+.mono { @apply font-mono tabular-nums; }
+
+input[type="range"] { accent-color: var(--accent); width: 100%; }
+select, input[type="number"] {
+  @apply bg-surface-2 border border-line rounded-md px-2 py-1 text-sm text-ink-1;
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); opacity: 0.9; }
+  100% { transform: scale(2.4); opacity: 0; }
+}
+.pulse-ring { animation: pulse-ring 1.6s ease-out infinite; }
+@media (prefers-reduced-motion: reduce) { .pulse-ring { animation: none; } }
+
+.skeleton { @apply rounded-md bg-surface-3 animate-pulse; }
+
+/* 06 §5: estimate marker slides to its new km (300 ms), no flashing */
+.react-flow__node-marker, .react-flow__node-band { transition: transform 300ms ease-out; }
+@media (prefers-reduced-motion: reduce) { .react-flow__node-marker, .react-flow__node-band { transition: none; } }

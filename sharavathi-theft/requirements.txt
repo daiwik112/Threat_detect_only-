@@ -1,0 +1,25 @@
+# Python 3.12. Versions match the environment the shipped models in data/models were trained with
+# (joblib / torch artifacts are version-sensitive). Same pins as backend/Dockerfile.
+# CPU-only PyTorch:  pip install torch==2.14.1 --index-url https://download.pytorch.org/whl/cpu
+pandapower==3.5.6
+numpy==2.4.6
+pandas==2.3.3
+pyarrow==26.0.0
+scipy==1.18.1
+scikit-learn==1.9.1
+xgboost==3.4.1
+shap==0.54.1
+networkx==3.7
+pyyaml==6.0.3
+pydantic==2.14.1
+joblib==1.6.0
+fastapi==0.162.0
+uvicorn[standard]==0.54.0
+httpx==0.28.1
+anthropic==2.3.0
+torch==2.14.1
+torch-geometric==2.8.1
+matplotlib==3.11.2
+# tests
+pytest==9.1.1
+pytest-asyncio==1.4.1

@@ -1,0 +1,12 @@
+profile: major_only            # major_only | major_plus_mid | dense
+
+noise:
+  vm_pct:  0.2               # % of measured voltage magnitude (source: assumed)
+  p_pct:   0.5               # % of active power reading
+  q_pct:   1.0               # % of reactive power reading
+  va_deg:  0.05              # degrees of voltage angle
+
+profiles:
+  major_only:     [SHARAVATHI, SHIMOGA, NELAMANGALA, PEENYA]
+  major_plus_mid: [SHARAVATHI, SHIMOGA, SIRA_KBCROSS, NELAMANGALA, PEENYA]
+  dense:          all_buses   # expand to all buses + taps at runtime

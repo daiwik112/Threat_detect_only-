@@ -1,0 +1,10 @@
+{
+  "version": "wf3-v2",
+  "dataset_hash": "78465d5968a1",
+  "profile": "major_only",
+  "seed": 42,
+  "trained_at": "2026-10-28T08:46:59+00:00",
+  "n_features": 41,
+  "selected_localizer": "gnn",
+  "gnn": "available"
+}

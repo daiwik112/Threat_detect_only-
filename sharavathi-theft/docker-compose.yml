@@ -1,0 +1,28 @@
+# Full-stack dev environment (06 §6). `docker compose up --build`
+#   api → http://localhost:8000 (docs /docs)     web → http://localhost:5173
+# data/ is mounted, so trained models / datasets on the host are used as-is.
+services:
+  api:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    ports: ["8000:8000"]
+    env_file: [.env]
+    volumes:
+      - ./data:/app/data
+      - ./config:/app/config
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health')"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+
+  web:
+    build:
+      context: frontend
+    ports: ["5173:5173"]
+    environment:
+      VITE_API_URL: http://api:8000          # Vite proxies /api and /ws to the api service
+    depends_on:
+      api:
+        condition: service_healthy

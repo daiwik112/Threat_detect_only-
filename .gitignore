@@ -1,0 +1,29 @@
+# secrets — copy sharavathi-theft/.env.example to .env locally
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+install_log*.txt
+
+# Node / frontend build + test output
+node_modules/
+sharavathi-theft/frontend/dist/
+sharavathi-theft/frontend/test-results/
+sharavathi-theft/frontend/playwright-report/
+*.tsbuildinfo
+
+# Sensor-study datasets (~350 MB, regenerate with `make study-data`).
+# Everything else in data/ is committed so the app runs straight after cloning:
+#   data/models/ (trained models + metrics), data/raw/baseline_states.parquet,
+#   data/processed/dataset_major_only.parquet + splits.json (Replay / held-out cases)
+sharavathi-theft/data/processed/study/
+
+# editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

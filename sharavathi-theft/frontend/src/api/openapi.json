@@ -1,0 +1,2802 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Sharavathi Corridor \u2014 Suspected Extraction Detection API",
+    "description": "Simulation-only research API. Outputs indicate *suspected unauthorized extraction / unexplained anomalies* and require field verification.",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/api/health": {
+      "get": {
+        "tags": [
+          "meta"
+        ],
+        "summary": "Health",
+        "operationId": "health_api_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/features": {
+      "get": {
+        "tags": [
+          "meta"
+        ],
+        "summary": "Features",
+        "operationId": "features_api_features_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FeaturesResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/network": {
+      "get": {
+        "tags": [
+          "network"
+        ],
+        "summary": "Get Network",
+        "operationId": "get_network_api_network_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NetworkResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/simulate": {
+      "post": {
+        "tags": [
+          "simulate"
+        ],
+        "summary": "Post Simulate",
+        "description": "Build net (+ theft as a real pandapower load / fault) \u2192 AC PF \u2192 noisy metering.",
+        "operationId": "post_simulate_api_simulate_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SimulateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimulateResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/detect": {
+      "post": {
+        "tags": [
+          "analyze"
+        ],
+        "summary": "Post Detect",
+        "operationId": "post_detect_api_detect_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MeasurementsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DetectResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/localize": {
+      "post": {
+        "tags": [
+          "analyze"
+        ],
+        "summary": "Post Localize",
+        "operationId": "post_localize_api_localize_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LocalizeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/LocalizeResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/analyze": {
+      "post": {
+        "tags": [
+          "analyze"
+        ],
+        "summary": "Post Analyze",
+        "description": "Simulate (or take `measurements` / dataset `scenario_id`) \u2192 detect \u2192 localize.",
+        "operationId": "post_analyze_api_analyze_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AnalyzeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AnalyzeResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/batch-analyze": {
+      "post": {
+        "tags": [
+          "analyze"
+        ],
+        "summary": "Post Batch Analyze",
+        "description": "Up to 50 analyses in one call \u2014 used by the magnitude sweep and profile comparison.",
+        "operationId": "post_batch_analyze_api_batch_analyze_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BatchAnalyzeRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BatchAnalyzeResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/sample-requests": {
+      "get": {
+        "tags": [
+          "analyze"
+        ],
+        "summary": "Get Sample Requests",
+        "description": "Preset scenarios for the demo buttons.",
+        "operationId": "get_sample_requests_api_sample_requests_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/SampleRequest"
+                  },
+                  "type": "array",
+                  "title": "Response Get Sample Requests Api Sample Requests Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/sample-request": {
+      "get": {
+        "tags": [
+          "analyze"
+        ],
+        "summary": "Get Sample Request",
+        "operationId": "get_sample_request_api_sample_request_get",
+        "parameters": [
+          {
+            "name": "kind",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "string",
+              "default": "theft",
+              "title": "Kind"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SampleRequest"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/similar-cases": {
+      "post": {
+        "tags": [
+          "analyze"
+        ],
+        "summary": "Post Similar Cases",
+        "description": "Nearest labelled dataset scenarios in the vector DB (physics-feature embedding).",
+        "operationId": "post_similar_cases_api_similar_cases_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SimilarCasesRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SimilarCasesResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/metrics": {
+      "get": {
+        "tags": [
+          "metrics"
+        ],
+        "summary": "Get Metrics",
+        "description": "data/models/metrics.json \u2014 MetricsResponse keys at top level (+ detail keys).",
+        "operationId": "get_metrics_api_metrics_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/eval-arrays": {
+      "get": {
+        "tags": [
+          "metrics"
+        ],
+        "summary": "Get Eval Arrays",
+        "description": "Raw arrays for charts (estimated vs true km, ROC).",
+        "operationId": "get_eval_arrays_api_eval_arrays_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/sensor-study": {
+      "get": {
+        "tags": [
+          "metrics"
+        ],
+        "summary": "Get Sensor Study",
+        "operationId": "get_sensor_study_api_sensor_study_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/gnn-results": {
+      "get": {
+        "tags": [
+          "metrics"
+        ],
+        "summary": "Get Gnn Results",
+        "operationId": "get_gnn_results_api_gnn_results_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/dataset-card": {
+      "get": {
+        "tags": [
+          "metrics"
+        ],
+        "summary": "Get Dataset Card",
+        "operationId": "get_dataset_card_api_dataset_card_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/scenarios": {
+      "get": {
+        "tags": [
+          "scenarios"
+        ],
+        "summary": "Get Scenarios",
+        "operationId": "get_scenarios_api_scenarios_get",
+        "parameters": [
+          {
+            "name": "label",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Label"
+            }
+          },
+          {
+            "name": "tap",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Tap"
+            }
+          },
+          {
+            "name": "split",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "null"
+                }
+              ],
+              "title": "Split"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 500,
+              "minimum": 1,
+              "default": 50,
+              "title": "Limit"
+            }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "default": 0,
+              "title": "Offset"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScenarioListResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/scenarios/{scenario_id}": {
+      "get": {
+        "tags": [
+          "scenarios"
+        ],
+        "summary": "Get Scenario",
+        "operationId": "get_scenario_api_scenarios__scenario_id__get",
+        "parameters": [
+          {
+            "name": "scenario_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Scenario Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ScenarioDetail"
+                }
+              }
+            }
+          },
+          "404": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            },
+            "description": "Not Found"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/mitigation/strategies": {
+      "get": {
+        "tags": [
+          "mitigation (stub)"
+        ],
+        "summary": "Strategies",
+        "operationId": "strategies_api_mitigation_strategies_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StrategiesResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/mitigation/plan": {
+      "post": {
+        "tags": [
+          "mitigation (stub)"
+        ],
+        "summary": "Plan",
+        "operationId": "plan_api_mitigation_plan_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MitigationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MitigationResponse"
+                }
+              }
+            }
+          },
+          "501": {
+            "description": "Not Implemented",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MitigationResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/rag/status": {
+      "get": {
+        "tags": [
+          "rag advisor"
+        ],
+        "summary": "Status",
+        "operationId": "status_api_rag_status_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RagStatus"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/rag/advise": {
+      "post": {
+        "tags": [
+          "rag advisor"
+        ],
+        "summary": "Advise",
+        "description": "Cited guidance for a detect/localize result (e.g. the Scenario Lab output).",
+        "operationId": "advise_api_rag_advise_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AdviseRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdviceResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/rag/query": {
+      "post": {
+        "tags": [
+          "rag advisor"
+        ],
+        "summary": "Query",
+        "description": "Free-text question answered from the knowledge base.",
+        "operationId": "query_api_rag_query_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RagQueryRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AdviceResponse"
+                }
+              }
+            }
+          },
+          "503": {
+            "description": "Service Unavailable",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Unprocessable Entity",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AdviceResponse": {
+        "properties": {
+          "mode": {
+            "type": "string",
+            "enum": [
+              "llm",
+              "extractive"
+            ],
+            "title": "Mode"
+          },
+          "answer": {
+            "type": "string",
+            "title": "Answer"
+          },
+          "citations": {
+            "items": {
+              "$ref": "#/components/schemas/RagCitation"
+            },
+            "type": "array",
+            "title": "Citations"
+          },
+          "query": {
+            "type": "string",
+            "title": "Query"
+          },
+          "model": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Model"
+          },
+          "requires_human_approval": {
+            "type": "boolean",
+            "title": "Requires Human Approval"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Warnings"
+          },
+          "disclaimer": {
+            "type": "string",
+            "title": "Disclaimer"
+          }
+        },
+        "type": "object",
+        "required": [
+          "mode",
+          "answer",
+          "citations",
+          "query",
+          "model",
+          "requires_human_approval",
+          "warnings",
+          "disclaimer"
+        ],
+        "title": "AdviceResponse"
+      },
+      "AdviseAnalysis": {
+        "properties": {
+          "detect": {
+            "$ref": "#/components/schemas/DetectResponse"
+          },
+          "localize": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/LocalizeResponse"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "detect"
+        ],
+        "title": "AdviseAnalysis"
+      },
+      "AdviseRequest": {
+        "properties": {
+          "analysis": {
+            "$ref": "#/components/schemas/AdviseAnalysis"
+          },
+          "question": {
+            "anyOf": [
+              {
+                "type": "string",
+                "maxLength": 2000
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Question"
+          },
+          "k": {
+            "type": "integer",
+            "maximum": 12.0,
+            "minimum": 1.0,
+            "title": "K",
+            "default": 6
+          }
+        },
+        "type": "object",
+        "required": [
+          "analysis"
+        ],
+        "title": "AdviseRequest"
+      },
+      "AnalyzeRequest": {
+        "properties": {
+          "load_scale": {
+            "type": "number",
+            "title": "Load Scale",
+            "description": "system demand factor; clamped to [0.5, 1.15]",
+            "default": 1.0
+          },
+          "theft": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TheftSpec"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "fault": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/FaultSpec"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "sensor_profile": {
+            "type": "string",
+            "enum": [
+              "major_only",
+              "major_plus_mid",
+              "dense"
+            ],
+            "title": "Sensor Profile",
+            "default": "major_only"
+          },
+          "noise_mult": {
+            "type": "number",
+            "maximum": 10.0,
+            "minimum": 0.0,
+            "title": "Noise Mult",
+            "description": "multiplier on sensors.yaml noise",
+            "default": 1.0
+          },
+          "seed": {
+            "type": "integer",
+            "title": "Seed",
+            "default": 42
+          },
+          "measurements": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "anyOf": [
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ]
+                },
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Measurements"
+          },
+          "scenario_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Scenario Id"
+          },
+          "localize_method": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "xgb_reg",
+                  "section_rank",
+                  "gnn"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Localize Method"
+          }
+        },
+        "type": "object",
+        "title": "AnalyzeRequest",
+        "description": "Simulate-then-analyze, OR analyze given measurements, OR a dataset scenario_id."
+      },
+      "AnalyzeResponse": {
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "title": "Request Id"
+          },
+          "latency_ms": {
+            "type": "number",
+            "title": "Latency Ms"
+          },
+          "simulate": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SimulateResponse"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "detect": {
+            "$ref": "#/components/schemas/DetectResponse"
+          },
+          "localize": {
+            "$ref": "#/components/schemas/LocalizeResponse"
+          },
+          "recommendations": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Recommendations"
+          },
+          "disclaimer": {
+            "type": "string",
+            "title": "Disclaimer"
+          }
+        },
+        "type": "object",
+        "required": [
+          "request_id",
+          "latency_ms",
+          "simulate",
+          "detect",
+          "localize",
+          "recommendations",
+          "disclaimer"
+        ],
+        "title": "AnalyzeResponse"
+      },
+      "BatchAnalyzeRequest": {
+        "properties": {
+          "requests": {
+            "items": {
+              "$ref": "#/components/schemas/AnalyzeRequest"
+            },
+            "type": "array",
+            "maxItems": 50,
+            "minItems": 1,
+            "title": "Requests"
+          },
+          "explain": {
+            "type": "boolean",
+            "title": "Explain",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "requests"
+        ],
+        "title": "BatchAnalyzeRequest"
+      },
+      "BatchAnalyzeResponse": {
+        "properties": {
+          "request_id": {
+            "type": "string",
+            "title": "Request Id"
+          },
+          "latency_ms": {
+            "type": "number",
+            "title": "Latency Ms"
+          },
+          "n_ok": {
+            "type": "integer",
+            "title": "N Ok"
+          },
+          "results": {
+            "items": {
+              "$ref": "#/components/schemas/BatchItem"
+            },
+            "type": "array",
+            "title": "Results"
+          }
+        },
+        "type": "object",
+        "required": [
+          "request_id",
+          "latency_ms",
+          "n_ok",
+          "results"
+        ],
+        "title": "BatchAnalyzeResponse"
+      },
+      "BatchItem": {
+        "properties": {
+          "index": {
+            "type": "integer",
+            "title": "Index"
+          },
+          "result": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/AnalyzeResponse"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "error": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ErrorBody"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "index",
+          "result",
+          "error"
+        ],
+        "title": "BatchItem"
+      },
+      "Bus": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "km": {
+            "type": "number",
+            "title": "Km"
+          },
+          "role": {
+            "type": "string",
+            "title": "Role"
+          },
+          "metered": {
+            "type": "boolean",
+            "title": "Metered"
+          },
+          "lat": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lat"
+          },
+          "lon": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Lon"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "km",
+          "role",
+          "metered"
+        ],
+        "title": "Bus"
+      },
+      "Contributor": {
+        "properties": {
+          "feature": {
+            "type": "string",
+            "title": "Feature"
+          },
+          "shap": {
+            "type": "number",
+            "title": "Shap"
+          }
+        },
+        "type": "object",
+        "required": [
+          "feature",
+          "shap"
+        ],
+        "title": "Contributor"
+      },
+      "DetectResponse": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "normal",
+              "suspicious"
+            ],
+            "title": "Status"
+          },
+          "anomaly_score": {
+            "type": "number",
+            "title": "Anomaly Score"
+          },
+          "residuals": {
+            "items": {
+              "$ref": "#/components/schemas/Residual"
+            },
+            "type": "array",
+            "title": "Residuals"
+          },
+          "top_contributors": {
+            "items": {
+              "$ref": "#/components/schemas/Contributor"
+            },
+            "type": "array",
+            "title": "Top Contributors"
+          },
+          "likely_cause": {
+            "$ref": "#/components/schemas/LikelyCause"
+          },
+          "threshold_z": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Threshold Z"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "anomaly_score",
+          "residuals",
+          "top_contributors",
+          "likely_cause"
+        ],
+        "title": "DetectResponse"
+      },
+      "ErrorBody": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          }
+        },
+        "type": "object",
+        "required": [
+          "code",
+          "message"
+        ],
+        "title": "ErrorBody"
+      },
+      "ErrorResponse": {
+        "properties": {
+          "error": {
+            "$ref": "#/components/schemas/ErrorBody"
+          }
+        },
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "title": "ErrorResponse"
+      },
+      "FaultSpec": {
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "bias",
+              "drift",
+              "missing",
+              "line_outage"
+            ],
+            "title": "Type"
+          },
+          "channel": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Channel",
+            "description": "m_<BUS>_<vm|p|q> for sensor faults, LINE<i> for outage"
+          },
+          "param": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Param",
+            "description": "bias %, drift %/step, or outage line index"
+          }
+        },
+        "type": "object",
+        "required": [
+          "type"
+        ],
+        "title": "FaultSpec"
+      },
+      "FeaturesResponse": {
+        "properties": {
+          "mitigation_enabled": {
+            "type": "boolean",
+            "title": "Mitigation Enabled"
+          },
+          "gnn_enabled": {
+            "type": "boolean",
+            "title": "Gnn Enabled"
+          },
+          "gnn_available": {
+            "type": "boolean",
+            "title": "Gnn Available"
+          },
+          "rag_enabled": {
+            "type": "boolean",
+            "title": "Rag Enabled",
+            "default": true
+          }
+        },
+        "type": "object",
+        "required": [
+          "mitigation_enabled",
+          "gnn_enabled",
+          "gnn_available"
+        ],
+        "title": "FeaturesResponse"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "HealthResponse": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "model_version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Model Version"
+          },
+          "dataset_hash": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Dataset Hash"
+          },
+          "models_loaded": {
+            "additionalProperties": {
+              "type": "boolean"
+            },
+            "type": "object",
+            "title": "Models Loaded"
+          },
+          "selected_localizer": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Selected Localizer"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "model_version",
+          "dataset_hash",
+          "models_loaded",
+          "selected_localizer"
+        ],
+        "title": "HealthResponse"
+      },
+      "LikelyCause": {
+        "properties": {
+          "extraction": {
+            "type": "number",
+            "title": "Extraction"
+          },
+          "sensor_error": {
+            "type": "number",
+            "title": "Sensor Error"
+          },
+          "other": {
+            "type": "number",
+            "title": "Other"
+          }
+        },
+        "type": "object",
+        "required": [
+          "extraction",
+          "sensor_error",
+          "other"
+        ],
+        "title": "LikelyCause"
+      },
+      "Line": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "from_bus": {
+            "type": "string",
+            "title": "From Bus"
+          },
+          "to_bus": {
+            "type": "string",
+            "title": "To Bus"
+          },
+          "km_len": {
+            "type": "number",
+            "title": "Km Len"
+          },
+          "loading_pct": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Loading Pct"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "from_bus",
+          "to_bus",
+          "km_len"
+        ],
+        "title": "Line"
+      },
+      "LocalizeRequest": {
+        "properties": {
+          "measurements": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "Measurements"
+          },
+          "method": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "xgb_reg",
+                  "section_rank",
+                  "gnn"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Method"
+          }
+        },
+        "type": "object",
+        "required": [
+          "measurements"
+        ],
+        "title": "LocalizeRequest"
+      },
+      "LocalizeResponse": {
+        "properties": {
+          "method": {
+            "type": "string",
+            "enum": [
+              "xgb_reg",
+              "section_rank",
+              "gnn"
+            ],
+            "title": "Method"
+          },
+          "est_km": {
+            "type": "number",
+            "title": "Est Km"
+          },
+          "interval_km": {
+            "items": {
+              "type": "number"
+            },
+            "type": "array",
+            "title": "Interval Km"
+          },
+          "ranked_sections": {
+            "items": {
+              "$ref": "#/components/schemas/RankedSection"
+            },
+            "type": "array",
+            "title": "Ranked Sections"
+          },
+          "ranked_taps": {
+            "items": {
+              "$ref": "#/components/schemas/RankedTap"
+            },
+            "type": "array",
+            "title": "Ranked Taps"
+          }
+        },
+        "type": "object",
+        "required": [
+          "method",
+          "est_km",
+          "interval_km",
+          "ranked_sections",
+          "ranked_taps"
+        ],
+        "title": "LocalizeResponse"
+      },
+      "MeasurementsRequest": {
+        "properties": {
+          "measurements": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "Measurements"
+          }
+        },
+        "type": "object",
+        "required": [
+          "measurements"
+        ],
+        "title": "MeasurementsRequest"
+      },
+      "MitigationRequest": {
+        "properties": {
+          "scenario_id": {
+            "type": "string",
+            "title": "Scenario Id"
+          },
+          "strategy": {
+            "type": "string",
+            "enum": [
+              "load_balance",
+              "redispatch",
+              "shed"
+            ],
+            "title": "Strategy"
+          }
+        },
+        "type": "object",
+        "required": [
+          "scenario_id",
+          "strategy"
+        ],
+        "title": "MitigationRequest"
+      },
+      "MitigationResponse": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "title": "Status"
+          },
+          "planned_actions": {
+            "items": {},
+            "type": "array",
+            "title": "Planned Actions"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "planned_actions",
+          "message"
+        ],
+        "title": "MitigationResponse"
+      },
+      "NetworkResponse": {
+        "properties": {
+          "buses": {
+            "items": {
+              "$ref": "#/components/schemas/Bus"
+            },
+            "type": "array",
+            "title": "Buses"
+          },
+          "lines": {
+            "items": {
+              "$ref": "#/components/schemas/Line"
+            },
+            "type": "array",
+            "title": "Lines"
+          },
+          "taps": {
+            "items": {
+              "$ref": "#/components/schemas/Tap"
+            },
+            "type": "array",
+            "title": "Taps"
+          },
+          "shunts": {
+            "items": {
+              "$ref": "#/components/schemas/Shunt"
+            },
+            "type": "array",
+            "title": "Shunts"
+          },
+          "sections": {
+            "items": {
+              "$ref": "#/components/schemas/Section"
+            },
+            "type": "array",
+            "title": "Sections"
+          },
+          "assumptions": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Assumptions"
+          },
+          "disclaimer": {
+            "type": "string",
+            "title": "Disclaimer"
+          }
+        },
+        "type": "object",
+        "required": [
+          "buses",
+          "lines",
+          "taps",
+          "shunts",
+          "sections",
+          "assumptions",
+          "disclaimer"
+        ],
+        "title": "NetworkResponse"
+      },
+      "RagCitation": {
+        "properties": {
+          "n": {
+            "type": "integer",
+            "title": "N"
+          },
+          "chunk_id": {
+            "type": "string",
+            "title": "Chunk Id"
+          },
+          "doc_id": {
+            "type": "string",
+            "title": "Doc Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "section": {
+            "type": "string",
+            "title": "Section"
+          },
+          "source_type": {
+            "type": "string",
+            "title": "Source Type"
+          },
+          "score": {
+            "type": "number",
+            "title": "Score"
+          },
+          "cited": {
+            "type": "boolean",
+            "title": "Cited"
+          },
+          "snippet": {
+            "type": "string",
+            "title": "Snippet"
+          }
+        },
+        "type": "object",
+        "required": [
+          "n",
+          "chunk_id",
+          "doc_id",
+          "title",
+          "section",
+          "source_type",
+          "score",
+          "cited",
+          "snippet"
+        ],
+        "title": "RagCitation"
+      },
+      "RagQueryRequest": {
+        "properties": {
+          "question": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 3,
+            "title": "Question"
+          },
+          "k": {
+            "type": "integer",
+            "maximum": 12.0,
+            "minimum": 1.0,
+            "title": "K",
+            "default": 6
+          }
+        },
+        "type": "object",
+        "required": [
+          "question"
+        ],
+        "title": "RagQueryRequest"
+      },
+      "RagSource": {
+        "properties": {
+          "doc_id": {
+            "type": "string",
+            "title": "Doc Id"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title"
+          },
+          "source_type": {
+            "type": "string",
+            "title": "Source Type"
+          },
+          "n_chunks": {
+            "type": "integer",
+            "title": "N Chunks"
+          }
+        },
+        "type": "object",
+        "required": [
+          "doc_id",
+          "title",
+          "source_type",
+          "n_chunks"
+        ],
+        "title": "RagSource"
+      },
+      "RagStatus": {
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled"
+          },
+          "llm_available": {
+            "type": "boolean",
+            "title": "Llm Available"
+          },
+          "model": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Model"
+          },
+          "n_docs": {
+            "type": "integer",
+            "title": "N Docs"
+          },
+          "n_chunks": {
+            "type": "integer",
+            "title": "N Chunks"
+          },
+          "sources": {
+            "items": {
+              "$ref": "#/components/schemas/RagSource"
+            },
+            "type": "array",
+            "title": "Sources"
+          },
+          "built_at": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Built At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "enabled",
+          "llm_available",
+          "model",
+          "n_docs",
+          "n_chunks",
+          "sources",
+          "built_at"
+        ],
+        "title": "RagStatus"
+      },
+      "RankedSection": {
+        "properties": {
+          "section": {
+            "type": "string",
+            "title": "Section"
+          },
+          "prob": {
+            "type": "number",
+            "title": "Prob"
+          }
+        },
+        "type": "object",
+        "required": [
+          "section",
+          "prob"
+        ],
+        "title": "RankedSection"
+      },
+      "RankedTap": {
+        "properties": {
+          "tap_id": {
+            "type": "string",
+            "title": "Tap Id"
+          },
+          "km": {
+            "type": "number",
+            "title": "Km"
+          },
+          "prob": {
+            "type": "number",
+            "title": "Prob"
+          }
+        },
+        "type": "object",
+        "required": [
+          "tap_id",
+          "km",
+          "prob"
+        ],
+        "title": "RankedTap"
+      },
+      "Residual": {
+        "properties": {
+          "section": {
+            "type": "string",
+            "title": "Section"
+          },
+          "r_p_mw": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "R P Mw"
+          },
+          "r_q_mvar": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "R Q Mvar"
+          },
+          "z": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Z"
+          }
+        },
+        "type": "object",
+        "required": [
+          "section",
+          "r_p_mw",
+          "r_q_mvar",
+          "z"
+        ],
+        "title": "Residual"
+      },
+      "SampleRequest": {
+        "properties": {
+          "kind": {
+            "type": "string",
+            "title": "Kind"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "request": {
+            "$ref": "#/components/schemas/SimulateRequest"
+          }
+        },
+        "type": "object",
+        "required": [
+          "kind",
+          "label",
+          "request"
+        ],
+        "title": "SampleRequest"
+      },
+      "ScenarioDetail": {
+        "properties": {
+          "scenario_id": {
+            "type": "string",
+            "title": "Scenario Id"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "split": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Split"
+          },
+          "true_km": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "True Km"
+          },
+          "true_tap_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "True Tap Id"
+          },
+          "magnitude_mw": {
+            "type": "number",
+            "title": "Magnitude Mw"
+          },
+          "load_scale": {
+            "type": "number",
+            "title": "Load Scale"
+          },
+          "measurements": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "Measurements"
+          }
+        },
+        "type": "object",
+        "required": [
+          "scenario_id",
+          "label",
+          "split",
+          "true_km",
+          "true_tap_id",
+          "magnitude_mw",
+          "load_scale",
+          "measurements"
+        ],
+        "title": "ScenarioDetail"
+      },
+      "ScenarioListResponse": {
+        "properties": {
+          "total": {
+            "type": "integer",
+            "title": "Total"
+          },
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/ScenarioSummary"
+            },
+            "type": "array",
+            "title": "Items"
+          }
+        },
+        "type": "object",
+        "required": [
+          "total",
+          "items"
+        ],
+        "title": "ScenarioListResponse"
+      },
+      "ScenarioSummary": {
+        "properties": {
+          "scenario_id": {
+            "type": "string",
+            "title": "Scenario Id"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "split": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Split"
+          },
+          "true_km": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "True Km"
+          },
+          "true_tap_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "True Tap Id"
+          },
+          "magnitude_mw": {
+            "type": "number",
+            "title": "Magnitude Mw"
+          },
+          "load_scale": {
+            "type": "number",
+            "title": "Load Scale"
+          }
+        },
+        "type": "object",
+        "required": [
+          "scenario_id",
+          "label",
+          "split",
+          "true_km",
+          "true_tap_id",
+          "magnitude_mw",
+          "load_scale"
+        ],
+        "title": "ScenarioSummary"
+      },
+      "Section": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "from_bus": {
+            "type": "string",
+            "title": "From Bus"
+          },
+          "to_bus": {
+            "type": "string",
+            "title": "To Bus"
+          },
+          "km_from": {
+            "type": "number",
+            "title": "Km From"
+          },
+          "km_to": {
+            "type": "number",
+            "title": "Km To"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "from_bus",
+          "to_bus",
+          "km_from",
+          "km_to"
+        ],
+        "title": "Section"
+      },
+      "Shunt": {
+        "properties": {
+          "bus": {
+            "type": "string",
+            "title": "Bus"
+          },
+          "q_mvar_cap": {
+            "type": "number",
+            "title": "Q Mvar Cap"
+          }
+        },
+        "type": "object",
+        "required": [
+          "bus",
+          "q_mvar_cap"
+        ],
+        "title": "Shunt"
+      },
+      "SimilarCase": {
+        "properties": {
+          "scenario_id": {
+            "type": "string",
+            "title": "Scenario Id"
+          },
+          "similarity": {
+            "type": "number",
+            "title": "Similarity"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "true_km": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "True Km"
+          },
+          "magnitude_mw": {
+            "type": "number",
+            "title": "Magnitude Mw"
+          },
+          "load_scale": {
+            "type": "number",
+            "title": "Load Scale"
+          }
+        },
+        "type": "object",
+        "required": [
+          "scenario_id",
+          "similarity",
+          "label",
+          "true_km",
+          "magnitude_mw",
+          "load_scale"
+        ],
+        "title": "SimilarCase"
+      },
+      "SimilarCasesRequest": {
+        "properties": {
+          "measurements": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "Measurements"
+          },
+          "k": {
+            "type": "integer",
+            "maximum": 25.0,
+            "minimum": 1.0,
+            "title": "K",
+            "default": 5
+          },
+          "label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Label"
+          }
+        },
+        "type": "object",
+        "required": [
+          "measurements"
+        ],
+        "title": "SimilarCasesRequest"
+      },
+      "SimilarCasesResponse": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/components/schemas/SimilarCase"
+            },
+            "type": "array",
+            "title": "Items"
+          },
+          "n_indexed": {
+            "type": "integer",
+            "title": "N Indexed"
+          },
+          "dim": {
+            "type": "integer",
+            "title": "Dim"
+          },
+          "embedding": {
+            "type": "string",
+            "title": "Embedding"
+          },
+          "latency_ms": {
+            "type": "number",
+            "title": "Latency Ms"
+          }
+        },
+        "type": "object",
+        "required": [
+          "items",
+          "n_indexed",
+          "dim",
+          "embedding",
+          "latency_ms"
+        ],
+        "title": "SimilarCasesResponse"
+      },
+      "SimulateRequest": {
+        "properties": {
+          "load_scale": {
+            "type": "number",
+            "title": "Load Scale",
+            "description": "system demand factor; clamped to [0.5, 1.15]",
+            "default": 1.0
+          },
+          "theft": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TheftSpec"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "fault": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/FaultSpec"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "sensor_profile": {
+            "type": "string",
+            "enum": [
+              "major_only",
+              "major_plus_mid",
+              "dense"
+            ],
+            "title": "Sensor Profile",
+            "default": "major_only"
+          },
+          "noise_mult": {
+            "type": "number",
+            "maximum": 10.0,
+            "minimum": 0.0,
+            "title": "Noise Mult",
+            "description": "multiplier on sensors.yaml noise",
+            "default": 1.0
+          },
+          "seed": {
+            "type": "integer",
+            "title": "Seed",
+            "default": 42
+          }
+        },
+        "type": "object",
+        "title": "SimulateRequest"
+      },
+      "SimulateResponse": {
+        "properties": {
+          "scenario_id": {
+            "type": "string",
+            "title": "Scenario Id"
+          },
+          "measurements": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "Measurements"
+          },
+          "expected": {
+            "additionalProperties": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "type": "object",
+            "title": "Expected"
+          },
+          "true_label": {
+            "type": "string",
+            "title": "True Label"
+          },
+          "true_km": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "True Km"
+          },
+          "true_tap_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "True Tap Id"
+          },
+          "true_magnitude_mw": {
+            "type": "number",
+            "title": "True Magnitude Mw",
+            "default": 0.0
+          },
+          "sensor_profile": {
+            "type": "string",
+            "title": "Sensor Profile"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Warnings",
+            "default": []
+          },
+          "disclaimer": {
+            "type": "string",
+            "title": "Disclaimer"
+          }
+        },
+        "type": "object",
+        "required": [
+          "scenario_id",
+          "measurements",
+          "expected",
+          "true_label",
+          "sensor_profile",
+          "disclaimer"
+        ],
+        "title": "SimulateResponse"
+      },
+      "StrategiesResponse": {
+        "properties": {
+          "strategies": {
+            "items": {
+              "$ref": "#/components/schemas/Strategy"
+            },
+            "type": "array",
+            "title": "Strategies"
+          },
+          "mitigation_enabled": {
+            "type": "boolean",
+            "title": "Mitigation Enabled"
+          }
+        },
+        "type": "object",
+        "required": [
+          "strategies",
+          "mitigation_enabled"
+        ],
+        "title": "StrategiesResponse"
+      },
+      "Strategy": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "label": {
+            "type": "string",
+            "title": "Label"
+          },
+          "enabled": {
+            "type": "boolean",
+            "title": "Enabled"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "label",
+          "enabled"
+        ],
+        "title": "Strategy"
+      },
+      "Tap": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "km": {
+            "type": "number",
+            "title": "Km"
+          },
+          "line_id": {
+            "type": "string",
+            "title": "Line Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "km",
+          "line_id"
+        ],
+        "title": "Tap"
+      },
+      "TheftSpec": {
+        "properties": {
+          "km": {
+            "type": "number",
+            "title": "Km",
+            "description": "km from SHARAVATHI; clamped to [0, 361], snapped to nearest tap"
+          },
+          "magnitude_mw": {
+            "type": "number",
+            "title": "Magnitude Mw",
+            "description": "unmetered load MW; clamped to [0, 60]"
+          },
+          "pf": {
+            "type": "number",
+            "maximum": 1.0,
+            "minimum": 0.5,
+            "title": "Pf",
+            "default": 0.95
+          }
+        },
+        "type": "object",
+        "required": [
+          "km",
+          "magnitude_mw"
+        ],
+        "title": "TheftSpec"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

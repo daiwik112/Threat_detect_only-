@@ -1,0 +1,18 @@
+# RAG mitigation advisor (09_RAG_MODULE.md). Paths are relative to sharavathi-theft/.
+sources:
+  - {glob: "rag/corpus/playbooks/*.md",        type: playbook}     # project-authored, illustrative
+  - {glob: "rag/corpus/external/**/*.md",      type: external}     # drop verified utility SOPs here
+  - {glob: "../0*_*.md",                        type: project_doc}  # 00–09 workflow specs
+  - {glob: "data/processed/dataset_card.md",   type: project_doc}
+  - {glob: "future/README.md",                 type: project_doc}
+
+# multiplicative prior per source type (advice prefers guidance documents)
+source_weight: {playbook: 1.0, external: 1.0, project_doc: 0.85}
+
+chunk_chars: 900
+top_k: 6
+index_path: data/models/rag_index.joblib
+
+llm_enabled: true               # used only when the anthropic SDK + credentials are available
+model: claude-opus-5-5
+effort: medium

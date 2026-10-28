@@ -1,0 +1,3 @@
+mitigation_enabled: false      # flips on Future Work tab (see 07_FUTURE_MITIGATION)
+gnn_enabled: true
+rag_enabled: true             # RAG mitigation advisor, advice only (see 09_RAG_MODULE)

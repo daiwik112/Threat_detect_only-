@@ -1,0 +1,8 @@
+n_normal: 4000
+n_theft: 6000                       # magnitude 1-40 MW, any tap bus
+n_sensor_bias: 1500
+n_sensor_drift: 1000
+n_missing: 800
+n_line_outage: 500
+load_scale_range: [0.5, 1.15]
+holdout_locations_km: [45, 135, 255]   # leave-location-out test split
